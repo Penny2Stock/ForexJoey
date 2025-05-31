@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: forexjoey-backend
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app.main:app -k uvicorn.workers.UvicornWorker --workers 4 --timeout 120
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.9.0
+      - key: OANDA_API_KEY
+        sync: false
+      - key: OANDA_ACCOUNT_ID
+        sync: false
+      - key: JWT_SECRET_KEY
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: NEWSAPI_KEY
+        sync: false
+      - key: ALPACA_API_KEY
+        sync: false
+      - key: ALPACA_API_SECRET
+        sync: false
