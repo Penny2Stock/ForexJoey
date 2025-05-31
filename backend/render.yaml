@@ -2,7 +2,7 @@ services:
   - type: web
     name: forexjoey-backend
     env: python
-    buildCommand: pip install -r requirements.txt
+    buildCommand: python -m pip install --upgrade pip && pip install -r requirements.txt
     startCommand: gunicorn app.main:app -k uvicorn.workers.UvicornWorker --workers 4 --timeout 120
     envVars:
       - key: PYTHON_VERSION
