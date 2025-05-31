@@ -8,11 +8,12 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
-  // Enable React strict mode for better development practices
-  reactStrictMode: true,
+  // Disable React strict mode temporarily for deployment
+  reactStrictMode: false,
   // Configure image domains
   images: {
     domains: ['forexjoey-backend.onrender.com'],
+    unoptimized: true,
   },
   // Simplified webpack configuration
   webpack: (config, { isServer }) => {
@@ -22,6 +23,15 @@ const nextConfig = {
         net: false,
         tls: false,
         fs: false,
+        dgram: false,
+        crypto: false,
+        stream: false,
+        http: false,
+        https: false,
+        zlib: false,
+        path: false,
+        os: false,
+        url: false,
       };
     }
     return config;
@@ -32,6 +42,12 @@ const nextConfig = {
     NEXT_PUBLIC_API_BASE_URL: 'https://forexjoey-backend.onrender.com/api',
     NEXT_PUBLIC_WS_URL: 'wss://forexjoey-backend.onrender.com/api/ws',
   },
+  // Disable source maps in production
+  productionBrowserSourceMaps: false,
+  // Disable powered by header
+  poweredByHeader: false,
+  // Disable x-powered-by header
+  xPoweredBy: false,
 }
 
 module.exports = nextConfig

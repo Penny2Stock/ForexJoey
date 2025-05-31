@@ -1,5 +1,8 @@
 'use client';
 
+// This is a simplified WebSocket implementation for ForexJoey
+// It's designed to be compatible with Vercel's build process
+
 /**
  * Simplified WebSocket client service for ForexJoey
  * 
