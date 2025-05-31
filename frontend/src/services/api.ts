@@ -12,15 +12,46 @@ const api = axios.create({
   },
 });
 
+// Safe localStorage access
+const getLocalStorageItem = (key: string): string | null => {
+  if (typeof window !== 'undefined' && window.localStorage) {
+    try {
+      return localStorage.getItem(key);
+    } catch (e) {
+      console.error('Error accessing localStorage:', e);
+      return null;
+    }
+  }
+  return null;
+};
+
+const setLocalStorageItem = (key: string, value: string): void => {
+  if (typeof window !== 'undefined' && window.localStorage) {
+    try {
+      localStorage.setItem(key, value);
+    } catch (e) {
+      console.error('Error setting localStorage:', e);
+    }
+  }
+};
+
+const removeLocalStorageItem = (key: string): void => {
+  if (typeof window !== 'undefined' && window.localStorage) {
+    try {
+      localStorage.removeItem(key);
+    } catch (e) {
+      console.error('Error removing from localStorage:', e);
+    }
+  }
+};
+
 // Add request interceptor to attach auth token
 api.interceptors.request.use(
   (config) => {
     // Get token from localStorage when in browser environment
-    if (typeof window !== 'undefined') {
-      const token = localStorage.getItem('access_token');
-      if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
-      }
+    const token = getLocalStorageItem('access_token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
   },
@@ -44,7 +75,7 @@ const apiService = {
       
       // Save token to localStorage
       if (response.data.access_token) {
-        localStorage.setItem('access_token', response.data.access_token);
+        setLocalStorageItem('access_token', response.data.access_token);
       }
       
       return response.data;
@@ -56,7 +87,7 @@ const apiService = {
     },
     
     logout: () => {
-      localStorage.removeItem('access_token');
+      removeLocalStorageItem('access_token');
     },
     
     getProfile: async () => {

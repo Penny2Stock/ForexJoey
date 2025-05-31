@@ -28,9 +28,17 @@ const WS_ENVIRONMENTS: Record<Environment, string> = {
 
 // Determine which environment to use based on NEXT_PUBLIC_APP_ENV or NODE_ENV
 // This allows explicit control over which backend to connect to
-const APP_ENV = (process.env.NEXT_PUBLIC_APP_ENV as Environment) || 
-               (process.env.NODE_ENV === 'production' ? 'production' : 
-               (process.env.NODE_ENV === 'development' ? 'development' : 'local')) as Environment;
+// Safeguard against undefined during SSR
+const getAppEnv = (): Environment => {
+  // Default to production for Vercel deployment safety
+  if (typeof process === 'undefined') return 'production';
+  
+  return (process.env.NEXT_PUBLIC_APP_ENV as Environment) || 
+         (process.env.NODE_ENV === 'production' ? 'production' : 
+         (process.env.NODE_ENV === 'development' ? 'development' : 'local'));
+};
+
+const APP_ENV = getAppEnv();
 
 // Export the base URL for use in api.ts
 export const API_BASE_URL = API_ENVIRONMENTS[APP_ENV];

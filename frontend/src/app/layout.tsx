@@ -4,6 +4,7 @@ import './globals.css';
 import { ThemeProvider } from '@/components/theme-provider';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { WebSocketProvider } from '@/services/websocket-simple';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
@@ -30,21 +31,23 @@ export default function RootLayout({
       </head>
       <body className={`${inter.variable} font-sans antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-          <div className="min-h-screen bg-background text-foreground">
-            {children}
-          </div>
-          <ToastContainer
-            position="bottom-right"
-            theme="dark"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-          />
+          <WebSocketProvider>
+            <div className="min-h-screen bg-background text-foreground">
+              {children}
+            </div>
+            <ToastContainer
+              position="bottom-right"
+              theme="dark"
+              autoClose={5000}
+              hideProgressBar={false}
+              newestOnTop
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+            />
+          </WebSocketProvider>
         </ThemeProvider>
       </body>
     </html>

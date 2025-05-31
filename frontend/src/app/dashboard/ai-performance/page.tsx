@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { Card, Typography, Select, Spin, Alert, Row, Col, Statistic, Divider, Tabs, Space } from 'antd';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, Legend, PieChart, Pie, Cell } from 'recharts';
 import { ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons';
-import { useMarketUpdates } from '@/services/websocket';
+import { useMarketUpdates } from '@/services/websocket-simple';
 import apiService from '@/services/api';
 import AIInsightsPanel from '@/components/reflection/AIInsightsPanel';
 import DashboardLayout from '@/components/layout/DashboardLayout';
