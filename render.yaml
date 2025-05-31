@@ -1,5 +1,5 @@
 services:
-  # ForexJoey Backend API Service
+  # ForexJoey Production Backend API Service (main branch)
   - type: web
     name: forexjoey-backend
     env: python
@@ -8,9 +8,12 @@ services:
     startCommand: cd backend && uvicorn app.main:app --host 0.0.0.0 --port $PORT
     plan: starter  # Adjust based on your needs
     healthCheckPath: /
+    branch: main  # Only deploy from main branch
     envVars:
       - key: PYTHON_VERSION
         value: 3.9.0
+      - key: ENVIRONMENT
+        value: production
       - key: SUPABASE_URL
         sync: false  # Set this in the Render dashboard
       - key: SUPABASE_KEY
@@ -20,7 +23,7 @@ services:
       - key: OANDA_ACCOUNT_ID
         sync: false
       - key: OANDA_ENVIRONMENT
-        value: practice
+        value: practice  # Change to 'live' for real trading
       - key: OPENAI_API_KEY
         sync: false
       - key: ANTHROPIC_API_KEY
@@ -35,3 +38,47 @@ services:
         generateValue: true
       - key: CORS_ORIGINS
         value: https://forexjoey.vercel.app,http://localhost:3000
+      - key: LOG_LEVEL
+        value: INFO
+
+  # ForexJoey Development Backend API Service (development branch)
+  - type: web
+    name: forexjoey-backend-dev
+    env: python
+    region: frankfurt
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: cd backend && uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    plan: free  # Use free tier for development
+    healthCheckPath: /
+    branch: development  # Only deploy from development branch
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.9.0
+      - key: ENVIRONMENT
+        value: development
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_KEY
+        sync: false
+      - key: OANDA_API_KEY
+        sync: false
+      - key: OANDA_ACCOUNT_ID
+        sync: false
+      - key: OANDA_ENVIRONMENT
+        value: practice  # Always use practice for development
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: NEWS_API_KEY
+        sync: false
+      - key: ALPHA_VANTAGE_KEY
+        sync: false
+      - key: TRADING_ECONOMICS_KEY
+        sync: false
+      - key: SECRET_KEY
+        generateValue: true
+      - key: CORS_ORIGINS
+        value: https://forexjoey-dev.vercel.app,http://localhost:3000
+      - key: LOG_LEVEL
+        value: DEBUG  # More verbose logging for development

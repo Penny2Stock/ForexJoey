@@ -1,23 +1,42 @@
 // API Configuration for ForexJoey
-// This file centralizes API configuration to easily switch between local and deployed environments
+// This file centralizes API configuration to support local, development, and production environments
 
-// Default to local development if not specified
-const API_ENVIRONMENTS = {
+// ForexJoey requires multiple intelligence sources for high-accuracy decision making
+// These API configurations ensure proper connectivity to all backend services
+
+// Define environment types for type safety
+type Environment = 'local' | 'development' | 'production';
+
+// Environment configuration
+const API_ENVIRONMENTS: Record<Environment, string> = {
+  // Local development environment
   local: 'http://localhost:8000/api',
+  
+  // Development environment (connects to development branch deployment)
+  development: process.env.NEXT_PUBLIC_DEV_API_URL || 'https://forexjoey-backend-dev.onrender.com/api',
+  
+  // Production environment (connects to main branch deployment)
   production: process.env.NEXT_PUBLIC_API_BASE_URL || 'https://forexjoey-backend.onrender.com/api'
 };
 
-// Determine which environment to use
-// In production, this will use the Render-deployed backend
-const API_ENV = process.env.NODE_ENV === 'production' ? 'production' : 'local';
+// WebSocket environments for real-time trading data
+const WS_ENVIRONMENTS: Record<Environment, string> = {
+  local: 'ws://localhost:8000/api/ws',
+  development: process.env.NEXT_PUBLIC_DEV_WS_URL || 'wss://forexjoey-backend-dev.onrender.com/api/ws',
+  production: process.env.NEXT_PUBLIC_WS_URL || 'wss://forexjoey-backend.onrender.com/api/ws'
+};
+
+// Determine which environment to use based on NEXT_PUBLIC_APP_ENV or NODE_ENV
+// This allows explicit control over which backend to connect to
+const APP_ENV = (process.env.NEXT_PUBLIC_APP_ENV as Environment) || 
+               (process.env.NODE_ENV === 'production' ? 'production' : 
+               (process.env.NODE_ENV === 'development' ? 'development' : 'local')) as Environment;
 
 // Export the base URL for use in api.ts
-export const API_BASE_URL = API_ENVIRONMENTS[API_ENV];
+export const API_BASE_URL = API_ENVIRONMENTS[APP_ENV];
 
 // Export configuration for WebSocket connections
-export const WS_BASE_URL = API_ENV === 'production' 
-  ? (process.env.NEXT_PUBLIC_WS_URL || 'wss://forexjoey-backend.onrender.com/api/ws')
-  : 'ws://localhost:8000/api/ws';
+export const WS_BASE_URL = WS_ENVIRONMENTS[APP_ENV];
 
 // Export configuration object with all settings
 export const apiConfig = {
@@ -25,7 +44,19 @@ export const apiConfig = {
   wsUrl: WS_BASE_URL,
   timeout: 30000, // 30 seconds timeout for API calls
   retryAttempts: 3, // Number of retry attempts for failed calls
-  environment: API_ENV
+  environment: APP_ENV,
+  
+  // Intelligence source configuration
+  intelligenceSources: {
+    technical: true,      // Technical analysis indicators
+    sentiment: true,      // Market sentiment analysis
+    fundamental: true,    // Economic data and news
+    aiPrediction: true,   // AI-driven predictions
+    reflectionEngine: true // Learning from past trades
+  },
+  
+  // ForexJoey requires at least 2 intelligence sources for any trading signal
+  minIntelligenceSources: 2
 };
 
 export default apiConfig;
