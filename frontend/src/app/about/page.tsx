@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import Navbar from '@/components/landing/Navbar';
 import Footer from '@/components/landing/Footer';
 import AIChatAssistant from '@/components/landing/AIChatAssistant';
-import { RiTeamLine, RiAiLine, RiShieldLine, RiLineChartLine, RiBarChartGroupedLine } from 'react-icons/ri';
+import { RiTeamFill, RiRobot2Fill, RiShieldFill, RiLineChartFill, RiBarChartFill } from 'react-icons/ri';
 
 export default function AboutPage() {
   return (
@@ -63,27 +63,27 @@ export default function AboutPage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {[
                 {
-                  icon: <RiAiLine className="w-8 h-8 text-blue-400" />,
+                  icon: <RiRobot2Fill className="w-8 h-8 text-blue-400" />,
                   title: "AI-First Intelligence",
                   description: "Our autonomous agent continuously analyzes markets using multiple intelligence sources, delivering high-accuracy signals that human analysts might miss."
                 },
                 {
-                  icon: <RiShieldLine className="w-8 h-8 text-blue-400" />,
+                  icon: <RiShieldFill className="w-8 h-8 text-blue-400" />,
                   title: "Capital Protection",
                   description: "Every signal comes with built-in risk management. We prioritize protecting your trading capital above all else."
                 },
                 {
-                  icon: <RiBarChartGroupedLine className="w-8 h-8 text-blue-400" />,
+                  icon: <RiBarChartFill className="w-8 h-8 text-blue-400" />,
                   title: "Multi-Source Analysis",
                   description: "We require at least two independent sources of intelligence to confirm each signal, reducing false positives and enhancing reliability."
                 },
                 {
-                  icon: <RiLineChartLine className="w-8 h-8 text-blue-400" />,
+                  icon: <RiLineChartFill className="w-8 h-8 text-blue-400" />,
                   title: "Continuous Improvement",
                   description: "Our AI system reflects on every trade outcome, constantly optimizing its models and adapting to changing market conditions."
                 },
                 {
-                  icon: <RiTeamLine className="w-8 h-8 text-blue-400" />,
+                  icon: <RiTeamFill className="w-8 h-8 text-blue-400" />,
                   title: "Human-AI Partnership",
                   description: "We believe in augmenting human decision-making with AI, not replacing it. Every insight is explainable and transparent."
                 }

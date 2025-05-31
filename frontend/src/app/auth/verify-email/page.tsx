@@ -1,13 +1,14 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { RiMailLine, RiCheckLine, RiErrorWarningLine } from 'react-icons/ri';
 import { supabase } from '@/services/supabase';
 
-export default function VerifyEmailPage() {
+// Separate client component for handling verification
+function VerifyEmailContent() {
   const [isVerifying, setIsVerifying] = useState(true);
   const [isSuccess, setIsSuccess] = useState(false);
   const [error, setError] = useState('');
@@ -58,6 +59,67 @@ export default function VerifyEmailPage() {
   }, [searchParams, router]);
 
   return (
+    <motion.div
+      className="bg-gray-900/50 backdrop-blur-md rounded-2xl p-8 border border-gray-800 shadow-glow"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      {isVerifying ? (
+        <div className="text-center py-6">
+          <div className="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+          </div>
+          <h2 className="text-xl font-bold text-white mb-2">Verifying Your Email</h2>
+          <p className="text-gray-300">
+            Please wait while we verify your email address...
+          </p>
+        </div>
+      ) : isSuccess ? (
+        <div className="text-center py-6">
+          <div className="w-16 h-16 rounded-full bg-green-500/30 flex items-center justify-center text-green-400 mx-auto mb-4">
+            <RiCheckLine className="w-8 h-8" />
+          </div>
+          <h2 className="text-xl font-bold text-white mb-2">Email Verified!</h2>
+          <p className="text-gray-300 mb-8">
+            Your email has been successfully verified.<br />
+            Redirecting to onboarding...
+          </p>
+          <div className="flex justify-center">
+            <div className="w-16 h-1 bg-gray-800 rounded-full overflow-hidden">
+              <motion.div
+                className="h-full bg-blue-500"
+                initial={{ width: 0 }}
+                animate={{ width: "100%" }}
+                transition={{ duration: 3 }}
+              ></motion.div>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div className="text-center py-6">
+          <div className="w-16 h-16 rounded-full bg-red-500/30 flex items-center justify-center text-red-400 mx-auto mb-4">
+            <RiErrorWarningLine className="w-8 h-8" />
+          </div>
+          <h2 className="text-xl font-bold text-white mb-2">Verification Failed</h2>
+          <p className="text-gray-300 mb-6">
+            {error || 'Something went wrong with the verification process.'}
+          </p>
+          <Link
+            href="/auth/sign-in"
+            className="inline-block px-6 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition-colors"
+          >
+            Back to Sign In
+          </Link>
+        </div>
+      )}
+    </motion.div>
+  );
+}
+
+// Main page component with Suspense boundary
+export default function VerifyEmailPage() {
+  return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 via-blue-950 to-black flex flex-col">
       {/* Background accents */}
       <div className="absolute inset-0 z-0">
@@ -66,61 +128,16 @@ export default function VerifyEmailPage() {
       </div>
       
       <div className="container max-w-md mx-auto px-4 py-16 flex-1 flex flex-col justify-center relative z-10">
-        <motion.div
-          className="bg-gray-900/50 backdrop-blur-md rounded-2xl p-8 border border-gray-800 shadow-glow"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          {isVerifying ? (
-            <div className="text-center py-6">
-              <div className="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
-                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
-              </div>
-              <h2 className="text-xl font-bold text-white mb-2">Verifying Your Email</h2>
-              <p className="text-gray-300">
-                Please wait while we verify your email address...
-              </p>
+        <Suspense fallback={
+          <div className="text-center py-6">
+            <div className="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
             </div>
-          ) : isSuccess ? (
-            <div className="text-center py-6">
-              <div className="w-16 h-16 rounded-full bg-green-500/30 flex items-center justify-center text-green-400 mx-auto mb-4">
-                <RiCheckLine className="w-8 h-8" />
-              </div>
-              <h2 className="text-xl font-bold text-white mb-2">Email Verified!</h2>
-              <p className="text-gray-300 mb-8">
-                Your email has been successfully verified.<br />
-                Redirecting to onboarding...
-              </p>
-              <div className="flex justify-center">
-                <div className="w-16 h-1 bg-gray-800 rounded-full overflow-hidden">
-                  <motion.div
-                    className="h-full bg-blue-500"
-                    initial={{ width: 0 }}
-                    animate={{ width: "100%" }}
-                    transition={{ duration: 3 }}
-                  ></motion.div>
-                </div>
-              </div>
-            </div>
-          ) : (
-            <div className="text-center py-6">
-              <div className="w-16 h-16 rounded-full bg-red-500/30 flex items-center justify-center text-red-400 mx-auto mb-4">
-                <RiErrorWarningLine className="w-8 h-8" />
-              </div>
-              <h2 className="text-xl font-bold text-white mb-2">Verification Failed</h2>
-              <p className="text-gray-300 mb-6">
-                {error || 'Something went wrong with the verification process.'}
-              </p>
-              <Link
-                href="/auth/sign-in"
-                className="inline-block px-6 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition-colors"
-              >
-                Back to Sign In
-              </Link>
-            </div>
-          )}
-        </motion.div>
+            <h2 className="text-xl font-bold text-white mb-2">Loading...</h2>
+          </div>
+        }>
+          <VerifyEmailContent />
+        </Suspense>
       </div>
     </div>
   );

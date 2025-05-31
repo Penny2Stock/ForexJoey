@@ -8,7 +8,7 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Divider, Typography, Badge, Tooltip, Progress, List, Spin, Alert, Tabs } from 'antd';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer, Legend, PieChart, Pie, Cell } from 'recharts';
-import { BrainIcon, LightBulbIcon, ChartBarIcon, ClockIcon, ArrowUpIcon, ArrowDownIcon } from '@heroicons/react/24/outline';
+import { BrainCircuit, LightBulb, ChartBar, Clock, ArrowUp, ArrowDown } from '@heroicons/react/24/outline';
 import apiService from '@/services/api';
 
 const { Title, Text } = Typography;
@@ -151,7 +151,7 @@ const AIInsightsPanel: React.FC<AIInsightsPanelProps> = ({ currencyPair, timefra
   return (
     <Card className="w-full shadow-md">
       <div className="flex items-center mb-4">
-        <BrainIcon className="h-6 w-6 text-blue-500 mr-2" />
+        <BrainCircuit className="h-6 w-6 text-blue-500 mr-2" />
         <Title level={4} className="m-0">AI Continuous Learning</Title>
       </div>
       
@@ -270,7 +270,7 @@ const AIInsightsPanel: React.FC<AIInsightsPanelProps> = ({ currencyPair, timefra
         <TabPane tab="AI Insights" key="2">
           <div className="space-y-4">
             <div className="flex items-center">
-              <LightBulbIcon className="h-5 w-5 text-yellow-500 mr-2" />
+              <LightBulb className="h-5 w-5 text-yellow-500 mr-2" />
               <Title level={5} className="m-0">Lessons Learned From Trading</Title>
             </div>
             
@@ -287,7 +287,7 @@ const AIInsightsPanel: React.FC<AIInsightsPanelProps> = ({ currencyPair, timefra
                         </Badge>
                         <Tooltip title={new Date(insight.created_at).toLocaleString()}>
                           <div className="flex items-center text-gray-500 text-sm">
-                            <ClockIcon className="h-4 w-4 mr-1" />
+                            <Clock className="h-4 w-4 mr-1" />
                             {new Date(insight.created_at).toLocaleDateString()}
                           </div>
                         </Tooltip>
@@ -300,7 +300,7 @@ const AIInsightsPanel: React.FC<AIInsightsPanelProps> = ({ currencyPair, timefra
                           renderItem={(lesson) => (
                             <List.Item className="py-1 px-0 border-0">
                               <div className="flex">
-                                <ChartBarIcon className="h-5 w-5 text-blue-500 flex-shrink-0 mr-2" />
+                                <ChartBar className="h-5 w-5 text-blue-500 flex-shrink-0 mr-2" />
                                 <Text>{lesson}</Text>
                               </div>
                             </List.Item>

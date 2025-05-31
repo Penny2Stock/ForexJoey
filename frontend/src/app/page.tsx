@@ -1,12 +1,16 @@
 'use client';
 
-import Hero from '@/components/landing/Hero';
-import Navbar from '@/components/landing/Navbar';
-import Features from '@/components/landing/Features';
-import Testimonials from '@/components/landing/Testimonials';
-import CTASection from '@/components/landing/CTASection';
-import Footer from '@/components/landing/Footer';
-import AIChatAssistant from '@/components/landing/AIChatAssistant';
+// Simplified imports for Vercel deployment
+import dynamic from 'next/dynamic';
+
+// Dynamically import components to reduce initial load
+const Hero = dynamic(() => import('@/components/landing/Hero'), { ssr: false });
+const Navbar = dynamic(() => import('@/components/landing/Navbar'), { ssr: false });
+const Features = dynamic(() => import('@/components/landing/Features'), { ssr: false });
+const Testimonials = dynamic(() => import('@/components/landing/Testimonials'), { ssr: false });
+const CTASection = dynamic(() => import('@/components/landing/CTASection'), { ssr: false });
+const Footer = dynamic(() => import('@/components/landing/Footer'), { ssr: false });
+const AIChatAssistant = dynamic(() => import('@/components/landing/AIChatAssistant'), { ssr: false });
 
 export default function Home() {
   return (

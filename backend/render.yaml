@@ -2,11 +2,16 @@ services:
   - type: web
     name: forexjoey-backend
     env: python
-    buildCommand: python -m pip install --upgrade pip && pip install -r requirements.txt
-    startCommand: gunicorn app.main:app -k uvicorn.workers.UvicornWorker --workers 4 --timeout 120
+    buildCommand: |
+      python -m pip install --upgrade pip
+      pip install -r requirements.txt
+      pip install "uvicorn[standard]" gunicorn
+    startCommand: gunicorn app.main:app -k uvicorn.workers.UvicornWorker --workers 4 --timeout 120 --bind 0.0.0.0:$PORT
     envVars:
       - key: PYTHON_VERSION
         value: 3.9.0
+      - key: PORT
+        value: 8000
       - key: OANDA_API_KEY
         sync: false
       - key: OANDA_ACCOUNT_ID

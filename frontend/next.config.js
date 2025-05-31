@@ -46,8 +46,6 @@ const nextConfig = {
   productionBrowserSourceMaps: false,
   // Disable powered by header
   poweredByHeader: false,
-  // Disable x-powered-by header
-  xPoweredBy: false,
 }
 
 module.exports = nextConfig
