@@ -153,15 +153,15 @@ export default function AIChatAssistant() {
     <>
       {/* Chat toggle button */}
       <motion.button
-        className="fixed bottom-8 right-8 z-50 w-16 h-16 rounded-full bg-gradient-to-r from-blue-500 to-cyan-400 flex items-center justify-center shadow-glow text-white"
+        className="fixed lg:bottom-8 lg:right-8 bottom-4 right-4 z-50 w-12 h-12 lg:w-16 lg:h-16 rounded-full bg-gradient-to-r from-blue-500 to-cyan-400 flex items-center justify-center shadow-glow text-white"
         onClick={() => setIsOpen(!isOpen)}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
       >
         {isOpen ? (
-          <RiCloseLine className="w-8 h-8" />
+          <RiCloseLine className="w-6 h-6 lg:w-8 lg:h-8" />
         ) : (
-          <RiRobot2Line className="w-8 h-8" />
+          <RiRobot2Line className="w-6 h-6 lg:w-8 lg:h-8" />
         )}
       </motion.button>
       
@@ -169,21 +169,21 @@ export default function AIChatAssistant() {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            className="fixed bottom-28 right-8 z-40 w-full max-w-md"
+            className="fixed lg:bottom-28 lg:right-8 bottom-20 right-0 left-0 mx-auto lg:mx-0 z-40 w-full max-w-md"
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ duration: 0.2 }}
           >
-            <div className="bg-gray-900 rounded-xl shadow-glow border border-gray-700 overflow-hidden backdrop-blur-sm">
+            <div className="bg-gray-900 rounded-xl shadow-glow border border-gray-700 overflow-hidden backdrop-blur-sm mx-4 lg:mx-0">
               {/* Chat header */}
-              <div className="bg-gradient-to-r from-blue-600 to-cyan-500 p-4 flex items-center justify-between">
+              <div className="bg-gradient-to-r from-blue-600 to-cyan-500 p-3 lg:p-4 flex items-center justify-between">
                 <div className="flex items-center">
-                  <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white">
-                    <RiRobot2Line className="w-6 h-6" />
+                  <div className="w-8 h-8 lg:w-10 lg:h-10 rounded-full bg-white/10 flex items-center justify-center text-white">
+                    <RiRobot2Line className="w-5 h-5 lg:w-6 lg:h-6" />
                   </div>
                   <div className="ml-3">
-                    <h3 className="text-white font-bold">ForexJoey</h3>
+                    <h3 className="text-white font-bold text-sm lg:text-base">ForexJoey</h3>
                     <div className="flex items-center text-xs text-blue-100">
                       <div className="w-2 h-2 rounded-full bg-green-400 mr-1"></div>
                       AI Assistant
@@ -192,21 +192,21 @@ export default function AIChatAssistant() {
                 </div>
                 <button 
                   onClick={() => setIsOpen(false)}
-                  className="text-white/70 hover:text-white"
+                  className="text-white/70 hover:text-white p-2"
                 >
-                  <RiCloseLine className="w-6 h-6" />
+                  <RiCloseLine className="w-5 h-5 lg:w-6 lg:h-6" />
                 </button>
               </div>
               
               {/* Chat messages */}
-              <div className="h-96 overflow-y-auto p-4 flex flex-col space-y-4">
+              <div className="h-[60vh] lg:h-96 overflow-y-auto p-3 lg:p-4 flex flex-col space-y-3 lg:space-y-4">
                 {messages.map((message) => (
                   <div 
                     key={message.id} 
                     className={`flex ${message.sender === 'joey' ? 'justify-start' : 'justify-end'}`}
                   >
                     <div 
-                      className={`max-w-xs md:max-w-sm rounded-2xl px-4 py-3 ${
+                      className={`max-w-[85%] lg:max-w-sm rounded-2xl px-3 py-2 lg:px-4 lg:py-3 text-sm lg:text-base ${
                         message.sender === 'joey' 
                           ? 'bg-gray-800 text-white rounded-tl-none' 
                           : 'bg-blue-500 text-white rounded-tr-none'
@@ -219,7 +219,7 @@ export default function AIChatAssistant() {
                 
                 {isTyping && (
                   <div className="flex justify-start">
-                    <div className="bg-gray-800 text-white rounded-2xl rounded-tl-none max-w-xs px-4 py-3">
+                    <div className="bg-gray-800 text-white rounded-2xl rounded-tl-none max-w-[85%] px-3 py-2 lg:px-4 lg:py-3">
                       <div className="flex space-x-1">
                         <div className="w-2 h-2 rounded-full bg-blue-400 animate-bounce" style={{ animationDelay: '0s' }}></div>
                         <div className="w-2 h-2 rounded-full bg-blue-400 animate-bounce" style={{ animationDelay: '0.2s' }}></div>
@@ -233,39 +233,39 @@ export default function AIChatAssistant() {
               </div>
               
               {/* Input area */}
-              <div className="p-4 border-t border-gray-700">
-                <form onSubmit={handleSendMessage} className="flex items-center space-x-3">
+              <div className="p-3 lg:p-4 border-t border-gray-700">
+                <form onSubmit={handleSendMessage} className="flex items-center space-x-2 lg:space-x-3">
                   <input
                     type="text"
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
-                    className="flex-1 bg-gray-800 text-white rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 border border-gray-700"
+                    className="flex-1 bg-gray-800 text-white text-sm lg:text-base rounded-full px-3 py-2 lg:px-4 lg:py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 border border-gray-700"
                     placeholder="Ask me about ForexJoey..."
                   />
                   <button 
                     type="submit"
-                    className="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white hover:bg-blue-600 transition-colors"
+                    className="w-8 h-8 lg:w-10 lg:h-10 rounded-full bg-blue-500 flex items-center justify-center text-white hover:bg-blue-600 transition-colors"
                   >
-                    <RiSendPlaneFill className="w-5 h-5" />
+                    <RiSendPlaneFill className="w-4 h-4 lg:w-5 lg:h-5" />
                   </button>
                 </form>
-                <div className="mt-3 flex justify-center">
-                  <div className="flex flex-wrap justify-center gap-2 text-xs">
+                <div className="mt-2 lg:mt-3 flex justify-center">
+                  <div className="flex flex-wrap justify-center gap-1.5 lg:gap-2 text-[10px] lg:text-xs">
                     <button 
                       onClick={() => setInputValue("How accurate is ForexJoey?")}
-                      className="px-3 py-1 bg-gray-800 rounded-full text-gray-300 hover:bg-gray-700"
+                      className="px-2 py-1 lg:px-3 lg:py-1 bg-gray-800 rounded-full text-gray-300 hover:bg-gray-700"
                     >
                       Accuracy
                     </button>
                     <button 
                       onClick={() => setInputValue("How does risk management work?")}
-                      className="px-3 py-1 bg-gray-800 rounded-full text-gray-300 hover:bg-gray-700"
+                      className="px-2 py-1 lg:px-3 lg:py-1 bg-gray-800 rounded-full text-gray-300 hover:bg-gray-700"
                     >
                       Risk Management
                     </button>
                     <button 
                       onClick={() => setInputValue("What are the pricing plans?")}
-                      className="px-3 py-1 bg-gray-800 rounded-full text-gray-300 hover:bg-gray-700"
+                      className="px-2 py-1 lg:px-3 lg:py-1 bg-gray-800 rounded-full text-gray-300 hover:bg-gray-700"
                     >
                       Pricing
                     </button>
