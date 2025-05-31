@@ -1,0 +1,138 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 222 92% 10%;
+    --foreground: 220 16% 93%;
+    
+    --card: 230 22% 11%;
+    --card-foreground: 220 16% 93%;
+    
+    --popover: 230 22% 11%;
+    --popover-foreground: 220 16% 93%;
+    
+    --primary: 197 78% 35%;
+    --primary-foreground: 0 0% 100%;
+    
+    --secondary: 240 50% 94%;
+    --secondary-foreground: 222 92% 10%;
+    
+    --muted: 215 10% 53%;
+    --muted-foreground: 215 10% 65%;
+    
+    --accent: 195 75% 35%;
+    --accent-foreground: 0 0% 100%;
+    
+    --destructive: 345 100% 61%;
+    --destructive-foreground: 0 0% 100%;
+    
+    --success: 142 100% 55%;
+    --success-foreground: 0 0% 100%;
+    
+    --warning: 50 100% 50%;
+    --warning-foreground: 0 0% 0%;
+    
+    --border: 230 22% 20%;
+    --input: 230 22% 18%;
+    --ring: 197 78% 35%;
+    
+    --radius: 0.75rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  
+  h1 {
+    @apply text-heading-1;
+  }
+  
+  h2 {
+    @apply text-heading-2;
+  }
+  
+  h3 {
+    @apply text-heading-3;
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply bg-card-gradient backdrop-blur-lg border border-border/50 rounded-lg shadow-card;
+  }
+  
+  .neon-border {
+    @apply border border-accent shadow-neon;
+  }
+  
+  .data-value {
+    @apply font-mono text-data;
+  }
+  
+  .positive-value {
+    @apply text-positive;
+  }
+  
+  .negative-value {
+    @apply text-negative;
+  }
+  
+  .neutral-value {
+    @apply text-neutral;
+  }
+  
+  .buy-signal {
+    @apply bg-positive/10 text-positive border-positive/30;
+  }
+  
+  .sell-signal {
+    @apply bg-negative/10 text-negative border-negative/30;
+  }
+  
+  .neutral-signal {
+    @apply bg-neutral/10 text-neutral border-neutral/30;
+  }
+  
+  /* Custom scrollbar for the futuristic look */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    @apply bg-background;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    @apply bg-border rounded-full;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-accent/50;
+  }
+}
+
+/* Animation for the pulsing elements */
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 1;
+    filter: brightness(1);
+  }
+  50% {
+    opacity: 0.8;
+    filter: brightness(1.2);
+  }
+}
+
+.pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}

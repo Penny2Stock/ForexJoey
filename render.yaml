@@ -1,0 +1,37 @@
+services:
+  # ForexJoey Backend API Service
+  - type: web
+    name: forexjoey-backend
+    env: python
+    region: frankfurt  # Choose a region close to your target users
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: cd backend && uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    plan: starter  # Adjust based on your needs
+    healthCheckPath: /
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.9.0
+      - key: SUPABASE_URL
+        sync: false  # Set this in the Render dashboard
+      - key: SUPABASE_KEY
+        sync: false
+      - key: OANDA_API_KEY
+        sync: false
+      - key: OANDA_ACCOUNT_ID
+        sync: false
+      - key: OANDA_ENVIRONMENT
+        value: practice
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: NEWS_API_KEY
+        sync: false
+      - key: ALPHA_VANTAGE_KEY
+        sync: false
+      - key: TRADING_ECONOMICS_KEY
+        sync: false
+      - key: SECRET_KEY
+        generateValue: true
+      - key: CORS_ORIGINS
+        value: https://forexjoey.vercel.app,http://localhost:3000
