@@ -9,7 +9,7 @@ from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from typing import Dict, Optional
 import jwt
-from jwt.exceptions import PyJWTError
+from jwt.exceptions import InvalidTokenError
 
 from app.core.config import settings
 
@@ -50,5 +50,5 @@ async def get_current_user(token: str = Depends(oauth2_scheme)) -> Dict:
             # Additional user data would be extracted from the token payload
         }
         
-    except PyJWTError:
+    except InvalidTokenError:
         raise credentials_exception
